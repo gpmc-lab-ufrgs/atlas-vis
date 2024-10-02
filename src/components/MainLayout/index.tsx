@@ -4,7 +4,6 @@ import {
 
 import { Layout} from 'antd';
 import { Outlet } from 'react-router-dom';
-import { Footer } from 'antd/es/layout/layout';
 
 // import from local files
 import { getApolloClient } from '../../utils/apollo';
@@ -14,6 +13,7 @@ import Map from '../Map';
 import { useMapStore } from '../../store/useMapStore';
 import { useEffect } from 'react';
 import { logging } from '../../utils/loggin';
+import Footer from '../Footer';
 
 
 
@@ -56,9 +56,7 @@ export const MainLayout = () => {
                             <Outlet />
                         </Content>
                     </Layout>
-                    <Footer style={{ textAlign: 'center', background: 'transparent' }}>
-                        Footer content
-                    </Footer>
+                    <Footer />
                 </Layout>
             </Map>
         </ApolloProvider>

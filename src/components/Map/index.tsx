@@ -48,9 +48,11 @@ const Map: React.FC<MapProps> = ({ children }) => {
     }
 
   useEffect(() => {
+    console.log('center', center);
     if (mapRef.current) {
       mapRef.current.flyTo({
         center: center,
+        zoom: zoom,
         essential: true, // this animation is considered essential with respect to prefers-reduced-motion
       });
     }
