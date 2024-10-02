@@ -1,3 +1,22 @@
+const colors = {
+    main: '#00406F',
+    primary: '#1890ff',
+    secondary: '#f0f0f0',
+    danger: '#ff4d4f',
+    warning: '#faad14',
+    success: '#52c41a',
+    info: '#1890ff',
+    light: '#f0f0f0',
+    dark: '#000000',
+    text: '#000000',
+    background: '#f0f2f5',
+    border: '#d9d9d9',
+    disabled: '#d9d9d9',
+    placeholder: '#d9d9d9',
+    white: '#ffffff',
+    black: '#000000',
+  };
+
 const spacing = {
     xs: '4px',
     sm: '8px',
@@ -27,6 +46,7 @@ const spacing = {
     spacing,
     fontSizes,
     breakpoints,
+    colors,
   };
   
   export const colorBgContainerHeader = '#001529';

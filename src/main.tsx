@@ -39,6 +39,7 @@ import {
 
 //Styles
 import GlobalStyle from './styles/GlobalStyles';
+import { MainLayout } from './routes';
 
 //Constants
 // import { paths } from './utils/constants';
@@ -46,7 +47,9 @@ import GlobalStyle from './styles/GlobalStyles';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />} path="/">
+      <Route element={<MainLayout />} path='/'>
       
+      </Route>
     </Route>
   )
 );
@@ -54,7 +57,6 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
     <GlobalStyle />
-
     <RouterProvider router={router} />
   </>
 );

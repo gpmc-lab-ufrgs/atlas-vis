@@ -2,7 +2,7 @@ import {App as AntdApp, theme as AntdTheme} from 'antd';
 
 import {Provider} from 'react-redux';
 
-// import {Outlet} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 
 import {PersistGate} from 'redux-persist/integration/react';
 import store, {persistor} from './redux/store';
@@ -10,7 +10,7 @@ import store, {persistor} from './redux/store';
 import {ThemeProvider} from 'styled-components';
 
 import theme from './styles/Theme';
-// import { PageTitleProvider } from './components/PageTitleContext';
+import { BaseLayoutProvider } from './components/BaseLayoutContext';
 
 
 const App = () => {
@@ -21,9 +21,9 @@ const App = () => {
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
           <ThemeProvider theme={{antd: token, base: theme}}>
-            {/* <PageTitleProvider>
+            <BaseLayoutProvider>
               <Outlet />
-            </PageTitleProvider> */}
+            </BaseLayoutProvider>
           </ThemeProvider>
         </PersistGate>
       </Provider>
