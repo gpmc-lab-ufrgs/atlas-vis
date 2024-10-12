@@ -2,7 +2,7 @@ import {
     ApolloProvider,
   } from '@apollo/client';
 
-import { Layout} from 'antd';
+import { Drawer, Layout} from 'antd';
 import { Outlet } from 'react-router-dom';
 
 // import from local files
@@ -14,16 +14,17 @@ import { useMapStore } from '../../store/useMapStore';
 import { useEffect } from 'react';
 import { logging } from '../../utils/loggin';
 import Footer from '../Footer';
+import DrawerMenu from '../DrawerMenu/DrawerMenu';
 
 
 
 export const MainLayout = () => {
     
     const { user } = useAuthStore();
-    const { setCenter } = useMapStore();
+    const { drawerVisible, drawerLLMVisible, closeDrawer, closeDrawerLLM, openDrawer, openDrawerLLM, setCenter } = useMapStore();
     const { location, followLocation, getUserLocation } = useUserStore();
     
-    const {Header, Sider, Content} = Layout;
+    const {Header, Content} = Layout;
 
     getUserLocation(followLocation);
     useEffect(() => {
@@ -35,30 +36,44 @@ export const MainLayout = () => {
 
     return (
         <ApolloProvider client={getApolloClient(user.token)}>
-            <Map>
                 <Layout style={{height: '100vh', background: 'transparent'}}>
-                    <Header style={{background: 'transparent'}}>
-                        header
-                    </Header>
-                    <Layout style={{background: 'transparent'}}>
-                        <Sider style={{background: 'transparent'}}>
-                            Sider
-                        </Sider>
-                        <Content
-                            style={{
-                                margin: '24px 16px',
-                                padding: 24,
-                                minHeight: 280,
-                                background: 'transparent',
-                                overflowY: 'scroll',
-                            }}
-                        >
-                            <Outlet />
-                        </Content>
-                    </Layout>
+                    <DrawerMenu 
+                        open={drawerVisible} 
+                        placement="left"
+                        closeClick={closeDrawer}
+                        openClick={openDrawer}
+                    >
+                        [Sider content]
+                    </DrawerMenu>
+                    <DrawerMenu 
+                        open={drawerLLMVisible} 
+                        placement="right"
+                        closeClick={closeDrawerLLM}
+                        openClick={openDrawerLLM}
+                    >
+                        [LLM Sider content]
+                    </DrawerMenu>
+                    <Map>
+                        <Header style={{background: 'transparent'}}>
+                            header
+                        </Header>
+                        <Layout style={{background: 'transparent'}}>
+                            
+                            <Content
+                                style={{
+                                    margin: '24px 16px',
+                                    padding: 24,
+                                    minHeight: 280,
+                                    background: 'transparent',
+                                    overflowY: 'scroll',
+                                }}
+                            >
+                                <Outlet />
+                            </Content>
+                        </Layout>
+                    </Map>
                     <Footer />
                 </Layout>
-            </Map>
         </ApolloProvider>
     );
 };
