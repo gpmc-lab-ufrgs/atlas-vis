@@ -7,6 +7,8 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 
+import './lib/i18n';
+
 //Screens
 // import {
 //   AuditLogs,
