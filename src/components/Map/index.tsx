@@ -2,6 +2,8 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, {ReactNode, useEffect, useRef} from 'react';
 
+import PolygonsBR from './../../assets/map/br-uf.json';
+
 import {AimOutlined} from '@ant-design/icons';
 
 import {Button, Layout} from 'antd';
@@ -33,6 +35,79 @@ const Map: React.FC<MapProps> = ({children}) => {
     });
 
     mapRef.current = map;
+
+    mapRef.current.on('load', e => {
+      e.target.addSource('state', {
+        type: 'geojson',
+        data: PolygonsBR,
+        promoteId: 'CD_UF',
+      });
+
+      e.target.addLayer({
+        id: 'fill-state',
+        type: 'fill',
+        source: 'state',
+        layout: {
+          visibility: 'visible',
+        },
+        paint: {
+          'fill-color': {
+            property: 'POPULATION',
+            stops: [
+              [0, '#ADDC91'],
+              [2570160, '#6CC24A'],
+              [3766528, '#509E2F'],
+              [10444526, '#4A7729'],
+            ],
+          },
+          //@ts-ignore
+          'fill-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'click'], false],
+            1,
+            ['boolean', ['feature-state', 'highlight'], false],
+            1,
+            ['boolean', ['feature-state', 'hover'], false],
+            1,
+            0.8,
+          ],
+        },
+      });
+
+      e.target.addLayer({
+        id: 'state-borders',
+        type: 'line',
+        source: 'state',
+        layout: {
+          visibility: 'visible',
+        },
+        paint: {
+          'line-color': '#ffffff',
+          //@ts-ignore
+          'line-width': [
+            'case',
+            ['boolean', ['feature-state', 'click'], false],
+            1.8,
+            ['boolean', ['feature-state', 'highlight'], false],
+            1.8,
+            ['boolean', ['feature-state', 'hover'], false],
+            1.8,
+            0.75,
+          ],
+          //@ts-ignore
+          'line-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'click'], false],
+            1.5,
+            ['boolean', ['feature-state', 'highlight'], false],
+            1.5,
+            ['boolean', ['feature-state', 'hover'], false],
+            1.5,
+            0.5,
+          ],
+        },
+      });
+    });
 
     // Add navigation control (the +/- zoom buttons)
     // map.addControl(new mapboxgl.NavigationControl(), 'top-right');
