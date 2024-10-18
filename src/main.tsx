@@ -1,4 +1,3 @@
-import App from './App';
 import ReactDOM from 'react-dom/client';
 import {
   Route,
@@ -6,7 +5,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
-import styles from "./index.css";
+import App from './App';
 
 import './lib/i18n';
 
@@ -41,18 +40,31 @@ import './lib/i18n';
 // import { CreateEditGlobalParams } from 'routes/GlobalParams/CreateEdit';
 
 //Styles
+import {Suspense} from 'react';
+import {MainLayout} from './routes';
 import GlobalStyle from './styles/GlobalStyles';
-import { MainLayout } from './routes';
 
 //Constants
 // import { paths } from './utils/constants';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<App />} path="/">
-      <Route element={<MainLayout />} path='/'>
-      
-      </Route>
+    <Route
+      element={
+        <Suspense>
+          <App />
+        </Suspense>
+      }
+      path="/"
+    >
+      <Route
+        element={
+          <Suspense>
+            <MainLayout />
+          </Suspense>
+        }
+        path="/"
+      ></Route>
     </Route>
   )
 );

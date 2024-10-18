@@ -1,27 +1,27 @@
 // import logoTramontinaNegativo from '../../../assets/institutions/logoTramontinaNegativo.png';
-import logoSabanciNormal from '../../../assets/institutions/logoSabanciNormal.png';
-import logoUfrgsNegative from '../../../assets/institutions/logoUfrgsNegativo.png';
-import logoUfgNegative from '../../../assets/institutions/logoUfgNegativo.png';
+import logoBologna from '../../../assets/institutions/logoBologna.png';
 import logoFgvNegative from '../../../assets/institutions/logoNegativaFGV.png';
 import logoMitNegative from '../../../assets/institutions/logoNegativaMIT.png';
-import logoBologna from '../../../assets/institutions/logoBologna.png';
+import logoSabanciNormal from '../../../assets/institutions/logoSabanciNormal.png';
+import logoUfgNegative from '../../../assets/institutions/logoUfgNegativo.png';
+import logoUfrgsNegative from '../../../assets/institutions/logoUfrgsNegativo.png';
 import logoUnb from '../../../assets/institutions/logoUnb.png';
 // import logoNCF from '../../../assets/institutions/logoNCF.png';
+import logobocconi from '../../../assets/institutions/BOCCONI.png';
 import logoCapes from '../../../assets/institutions/CAPES.png';
 import logoCnpq from '../../../assets/institutions/CNPq.png';
-import logoTram from '../../../assets/institutions/TRAMONTINA.png';
-import logogovaust from '../../../assets/institutions/GOVERNO SUL AUSTRALIA.png';
-import logobocconi from '../../../assets/institutions/BOCCONI.png';
 import logofapergs from '../../../assets/institutions/FAPERGS.png';
+import logogovaust from '../../../assets/institutions/GOVERNO SUL AUSTRALIA.png';
 import logoLogan from '../../../assets/institutions/LOGAN.png';
+import logoTram from '../../../assets/institutions/TRAMONTINA.png';
 
-interface Institutions {
+export interface Institution {
   name: string;
   logoImage: string;
   size: number;
 }
 
-const developerInstitutionsLogoImages: Institutions[] = [
+const developerInstitutionsLogoImages: Institution[] = [
   {
     name: 'Massachusetts Institute of Technology',
     logoImage: logoMitNegative,
@@ -31,8 +31,8 @@ const developerInstitutionsLogoImages: Institutions[] = [
     name: 'Federal University of Rio Grande do Sul',
     logoImage: logoUfrgsNegative,
     size: 30,
-   },
-   {
+  },
+  {
     name: 'Sabanci University',
     logoImage: logoSabanciNormal,
     size: 30,
@@ -69,7 +69,7 @@ const developerInstitutionsLogoImages: Institutions[] = [
   },
 ];
 
-const supporterInstitutionLogoImages: Institutions[] = [
+const supporterInstitutionLogoImages: Institution[] = [
   {
     name: 'Tramontina',
     logoImage: logoTram,
@@ -97,5 +97,4 @@ const supporterInstitutionLogoImages: Institutions[] = [
   },
 ];
 
-export { developerInstitutionsLogoImages };
-export { supporterInstitutionLogoImages };
+export {developerInstitutionsLogoImages, supporterInstitutionLogoImages};

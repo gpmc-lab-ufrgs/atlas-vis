@@ -1,3 +1,11 @@
 {
-    "loading": "Loading"
+  "loading": "Loading",
+  "languages": {
+    "english": "English",
+    "portuguese": "Portuguese"
+  },
+  "footer": {
+    "supportedBy": "Supported by:",
+    "support": "Support:"
+  }
 }

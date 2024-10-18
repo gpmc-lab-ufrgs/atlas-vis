@@ -1,9 +1,4 @@
-import { Footer } from 'antd/es/layout/layout';
 import styled from 'styled-components';
-
-export const FooterContainer = styled(Footer)`
-  background-color: #032640;
-`;
 
 interface IInstitutionsLogo {
   size: number;
@@ -11,8 +6,8 @@ interface IInstitutionsLogo {
 }
 
 export const InstitutionsLogo = styled.div<IInstitutionsLogo>`
-  height: ${({ size }) => size}px;
-  background-image: url(${({ src }) => src});
+  height: ${({size}) => size}px;
+  background-image: url(${({src}) => src});
   background-size: contain;
   background-repeat: no-repeat;
   padding-right: 15px;

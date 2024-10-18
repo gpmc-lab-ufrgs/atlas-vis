@@ -1,16 +1,14 @@
-
-
 export interface IUser {
-    id: string;
-    email: string;
-    name: string;
-    role: string;
-    
-    /* auth tokens */
-    token: string;
-    refreshToken: string;
+  id: string;
+  email: string;
+  name: string;
+  role: string;
 
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date;
+  /* auth tokens */
+  token: string;
+  refreshToken: string;
+
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
 }

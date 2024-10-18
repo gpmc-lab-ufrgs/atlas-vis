@@ -1,4 +1,4 @@
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import {LeftOutlined, RightOutlined} from '@ant-design/icons';
 import * as Styles from './styles';
 
 interface Props {
@@ -6,8 +6,7 @@ interface Props {
   toggleDrawer: () => void;
 }
 
-const Minimizer = ({ isOpen, toggleDrawer }: Props) => {
-  
+const Minimizer = ({isOpen, toggleDrawer}: Props) => {
   const handleClick = () => {
     toggleDrawer();
   };

@@ -1,16 +1,13 @@
-import {ISignIn, IRefreshToken} from './types/ISignIn';
-import request from 'graphql-request';
 import axiosApiInstance from '~/utils/api/axios';
-import {IUpdateUserAvatar} from './types/IUpdateUserAvatar';
-import {IChangePassword} from './types/IChangePassword';
-import {ISignUp} from './types/ISignUp';
-import {IUpdateUser} from './types/IUpdateUser';
-import {useAuthStore} from '~/store/useAuthStore';
-import {CONSTANTS} from '~/configs/constants';
 import graphqLInstance from '~/utils/api/graphql';
+import {IChangePassword} from './types/IChangePassword';
+import {IGetMe} from './types/IGetMe';
 import {IResetPassword} from './types/IResetPassword';
 import {IResetPasswordConfirmation} from './types/IResetPasswordConfirmation';
-import {IGetMe} from './types/IGetMe';
+import {IRefreshToken, ISignIn} from './types/ISignIn';
+import {ISignUp} from './types/ISignUp';
+import {IUpdateUser} from './types/IUpdateUser';
+import {IUpdateUserAvatar} from './types/IUpdateUserAvatar';
 import {IValidateInviteCode} from './types/IValidateInviteCode';
 
 async function refreshToken(

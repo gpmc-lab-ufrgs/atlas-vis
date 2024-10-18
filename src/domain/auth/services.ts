@@ -4,7 +4,7 @@ import {IChangePassword} from './types/IChangePassword';
 import {IGetMe} from './types/IGetMe';
 import {IResetPassword} from './types/IResetPassword';
 import {IResetPasswordConfirmation} from './types/IResetPasswordConfirmation';
-import {ISignIn, IRefreshToken} from './types/ISignIn';
+import {IRefreshToken, ISignIn} from './types/ISignIn';
 import {ISignUp} from './types/ISignUp';
 import {IUpdateUser} from './types/IUpdateUser';
 import {IUpdateUserAvatar} from './types/IUpdateUserAvatar';

@@ -6,9 +6,9 @@ import {UseAuthStoreType} from './types';
 import {queryClient} from '../../utils/apollo';
 
 const initialState = {
-  user: {} as any/*UserDetails*/,
+  user: {} as any /*UserDetails*/,
   isLoggedIn: false,
-  authenticationResult: {} as any/*AuthenticationResult*/,
+  authenticationResult: {} as any /*AuthenticationResult*/,
   Session: '',
   expiresWhen: new Date(),
   isRefreshingToken: false,
@@ -19,10 +19,10 @@ export const useAuthStore = create<UseAuthStoreType>()(
     (set, get) => ({
       ...initialState,
       // setLogin: ({authenticationResult, user}) => {
-        // const now = new Date();
-        // const expiresInMs = authenticationResult.ExpiresIn * 1000; // Convert seconds to milliseconds
-        // const expiresWhen = new Date(now.getTime() + expiresInMs);
-        // set({authenticationResult, user, isLoggedIn: true, expiresWhen});
+      // const now = new Date();
+      // const expiresInMs = authenticationResult.ExpiresIn * 1000; // Convert seconds to milliseconds
+      // const expiresWhen = new Date(now.getTime() + expiresInMs);
+      // set({authenticationResult, user, isLoggedIn: true, expiresWhen});
       // },
       setSession: (Session: string) => {
         set({Session});
@@ -50,7 +50,7 @@ export const useAuthStore = create<UseAuthStoreType>()(
         const {expiresWhen} = get();
         return expiresWhen < new Date();
       },
-      getLogin: () : any => {
+      getLogin: (): any => {
         // const {authenticationResult, user, isLoggedIn} = get();
         // return {authenticationResult, user, isLoggedIn};
         return {};
@@ -58,14 +58,13 @@ export const useAuthStore = create<UseAuthStoreType>()(
       getAccessToken: (): string => {
         // const {authenticationResult} = get();
         // return authenticationResult.AccessToken;
-        return "";
+        return '';
       },
       getRefreshToken: (): string | undefined => {
         // const {authenticationResult} = get();
         // return authenticationResult.RefreshToken;
-        return "";
+        return '';
       },
-
     }),
     {
       name: 'auth-storage',
