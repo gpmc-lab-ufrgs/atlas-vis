@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+import styles from "./index.css";
 
 import './lib/i18n';
 
