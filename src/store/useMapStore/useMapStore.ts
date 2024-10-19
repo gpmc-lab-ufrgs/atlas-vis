@@ -4,7 +4,7 @@ import {MapStoreType} from './types';
 
 const initialState = {
   center: [-58, -15] as mapboxgl.LngLatLike,
-  zoom: 12,
+  zoom: 3, //12,
   drawerVisible: false,
   drawerLLMVisible: false,
 };

@@ -51,23 +51,30 @@ const Map: React.FC<MapProps> = ({children}) => {
           visibility: 'visible',
         },
         paint: {
-          'fill-color': {
-            property: 'POPULATION',
-            stops: [
-              [0, '#ADDC91'],
-              [2570160, '#6CC24A'],
-              [3766528, '#509E2F'],
-              [10444526, '#4A7729'],
-            ],
-          },
+          'fill-color': [
+            'match',
+            ['get', 'selected'],
+            'true',
+            '#509E2F',
+            'rgba(0,0,0,0.1)',
+          ],
+          //   'fill-color': {
+          //     property: 'POPULATION',
+          //     stops: [
+          //       [0, 'transparent'],
+          //       //   [2570160, 'rgba(0,0,0,0.25)'],
+          //       //   [3766528, 'rgba(0,0,0,0.3)'],
+          //       //   [10444526, 'rgba(0,0,0,0.35)'],
+          //     ],
+          //   },
           //@ts-ignore
           'fill-opacity': [
             'case',
-            ['boolean', ['feature-state', 'click'], false],
+            ['boolean', ['feature-state', 'click'], true],
             1,
-            ['boolean', ['feature-state', 'highlight'], false],
+            ['boolean', ['feature-state', 'highlight'], true],
             1,
-            ['boolean', ['feature-state', 'hover'], false],
+            ['boolean', ['feature-state', 'hover'], true],
             1,
             0.8,
           ],
@@ -82,18 +89,19 @@ const Map: React.FC<MapProps> = ({children}) => {
           visibility: 'visible',
         },
         paint: {
-          'line-color': '#ffffff',
+          'line-color': '#509E2F',
+          'line-width': 2,
           //@ts-ignore
-          'line-width': [
-            'case',
-            ['boolean', ['feature-state', 'click'], false],
-            1.8,
-            ['boolean', ['feature-state', 'highlight'], false],
-            1.8,
-            ['boolean', ['feature-state', 'hover'], false],
-            1.8,
-            0.75,
-          ],
+          //   'line-width': [
+          //     'case',
+          //     ['boolean', ['feature-state', 'click'], false],
+          //     1.8,
+          //     ['boolean', ['feature-state', 'highlight'], false],
+          //     1.8,
+          //     ['boolean', ['feature-state', 'hover'], false],
+          //     1.8,
+          //     0.75,
+          //   ],
           //@ts-ignore
           'line-opacity': [
             'case',
@@ -106,6 +114,24 @@ const Map: React.FC<MapProps> = ({children}) => {
             0.5,
           ],
         },
+      });
+
+      //   e.target.on('click', 'fill-state', (e: mapboxgl.EventData) => {
+      //     console.log('click');
+      //   });
+
+      //   e.target.on('mousemove', 'fill-state', (e: mapboxgl.EventData) => {
+      //     console.log('mousemove');
+      //   });
+
+      //   e.target.on('mouseleave', 'fill-state', () => {
+      //     console.log('mouseleave');
+      //   });
+
+      e.target.on('click', 'fill-state', (e: mapboxgl.EventData) => {
+        if (e.features.length > 0) {
+          console.log(e.features[0]);
+        }
       });
     });
 
@@ -123,7 +149,6 @@ const Map: React.FC<MapProps> = ({children}) => {
   };
 
   useEffect(() => {
-    console.log('center', center);
     if (mapRef.current) {
       mapRef.current.flyTo({
         center: center,
