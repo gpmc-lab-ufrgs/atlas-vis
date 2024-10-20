@@ -3,6 +3,9 @@ export type MapStoreType = {
   zoom: number;
   drawerVisible: boolean;
   drawerLLMVisible: boolean;
+  highlightedPolygonId?: number | string | null | undefined;
+  selectedState?: string | null | undefined;
+  selectedDistrict?: string | null | undefined;
 
   setDrawerVisible(drawerVisible: boolean): void;
   openDrawer(): void;
@@ -13,5 +16,12 @@ export type MapStoreType = {
 
   setCenter(center: mapboxgl.LngLatLike): void;
   setZoom(zoom: number): void;
+
+  setHighlightedPolygonId(
+    highlightedPolygonId: number | string | null | undefined
+  ): void;
+  setSelectedState(selectedState: string | null | undefined): void;
+  setSelectedDistrict(selectedDistrict: string | null | undefined): void;
+
   clearMapStore(): void;
 };

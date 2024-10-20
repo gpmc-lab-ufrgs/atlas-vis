@@ -7,6 +7,7 @@ import PolygonsBR from './../../assets/map/br-uf.json';
 import {AimOutlined} from '@ant-design/icons';
 
 import {Button, Layout} from 'antd';
+import {useTranslation} from 'react-i18next';
 import {useMapStore} from '../../store/useMapStore';
 import {useUserStore} from '../../store/useUserStore';
 import Theme from '../../styles/Theme';
@@ -19,11 +20,42 @@ interface MapProps {
 }
 
 const Map: React.FC<MapProps> = ({children}) => {
-  const {center, zoom, setCenter} = useMapStore();
+  const {
+    center,
+    zoom,
+    setCenter,
+    highlightedPolygonId,
+    setHighlightedPolygonId,
+  } = useMapStore();
   const {location, followLocation, getUserLocation} = useUserStore();
+  const {i18n} = useTranslation();
+  const [hoveredId, setHoveredId] = React.useState<number | null>(null);
 
   const mapContainerRef = useRef<any>();
   const mapRef = useRef<mapboxgl.Map | null>(null);
+
+  useEffect(() => {
+    if (hoveredId && hoveredId !== highlightedPolygonId?.id) {
+      mapRef.current?.setFeatureState(
+        {
+          source: 'state',
+          id: hoveredId as number,
+        },
+        {hover: false}
+      );
+      setHoveredId(null);
+    }
+    if (highlightedPolygonId) {
+      mapRef.current?.setFeatureState(
+        {
+          source: 'state',
+          id: highlightedPolygonId?.id as number,
+        },
+        {hover: true}
+      );
+      setHoveredId(highlightedPolygonId?.id as number);
+    }
+  }, [highlightedPolygonId, mapRef.current]);
 
   useEffect(() => {
     // Initialize map
@@ -36,14 +68,14 @@ const Map: React.FC<MapProps> = ({children}) => {
 
     mapRef.current = map;
 
-    mapRef.current.on('load', e => {
-      e.target.addSource('state', {
+    mapRef.current.on('load', () => {
+      mapRef.current?.addSource('state', {
         type: 'geojson',
         data: PolygonsBR,
         promoteId: 'CD_UF',
       });
 
-      e.target.addLayer({
+      mapRef?.current?.addLayer({
         id: 'fill-state',
         type: 'fill',
         source: 'state',
@@ -51,37 +83,21 @@ const Map: React.FC<MapProps> = ({children}) => {
           visibility: 'visible',
         },
         paint: {
-          'fill-color': [
-            'match',
-            ['get', 'selected'],
-            'true',
-            '#509E2F',
-            'rgba(0,0,0,0.1)',
-          ],
-          //   'fill-color': {
-          //     property: 'POPULATION',
-          //     stops: [
-          //       [0, 'transparent'],
-          //       //   [2570160, 'rgba(0,0,0,0.25)'],
-          //       //   [3766528, 'rgba(0,0,0,0.3)'],
-          //       //   [10444526, 'rgba(0,0,0,0.35)'],
-          //     ],
-          //   },
-          //@ts-ignore
+          'fill-color': '#1cbea9',
           'fill-opacity': [
             'case',
-            ['boolean', ['feature-state', 'click'], true],
-            1,
-            ['boolean', ['feature-state', 'highlight'], true],
-            1,
-            ['boolean', ['feature-state', 'hover'], true],
-            1,
-            0.8,
+            ['boolean', ['feature-state', 'click'], false],
+            0,
+            ['boolean', ['feature-state', 'highlight'], false],
+            0,
+            ['boolean', ['feature-state', 'hover'], false],
+            0.3,
+            0,
           ],
         },
       });
 
-      e.target.addLayer({
+      mapRef?.current?.addLayer({
         id: 'state-borders',
         type: 'line',
         source: 'state',
@@ -89,21 +105,10 @@ const Map: React.FC<MapProps> = ({children}) => {
           visibility: 'visible',
         },
         paint: {
-          'line-color': '#509E2F',
-          'line-width': 2,
+          'line-color': '#000',
+          //   'line-width': 2,
           //@ts-ignore
-          //   'line-width': [
-          //     'case',
-          //     ['boolean', ['feature-state', 'click'], false],
-          //     1.8,
-          //     ['boolean', ['feature-state', 'highlight'], false],
-          //     1.8,
-          //     ['boolean', ['feature-state', 'hover'], false],
-          //     1.8,
-          //     0.75,
-          //   ],
-          //@ts-ignore
-          'line-opacity': [
+          'line-width': [
             'case',
             ['boolean', ['feature-state', 'click'], false],
             1.5,
@@ -111,22 +116,32 @@ const Map: React.FC<MapProps> = ({children}) => {
             1.5,
             ['boolean', ['feature-state', 'hover'], false],
             1.5,
+            0.75,
+          ],
+          //@ts-ignore
+          'line-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'click'], false],
+            1.5,
+            ['boolean', ['feature-state', 'highlight'], false],
+            3,
+            ['boolean', ['feature-state', 'hover'], false],
+            1.5,
             0.5,
           ],
         },
       });
 
-      //   e.target.on('click', 'fill-state', (e: mapboxgl.EventData) => {
-      //     console.log('click');
-      //   });
+      mapRef?.current?.on('mousemove', 'fill-state', (e: any) => {
+        if (e.features.length > 0) {
+          setHighlightedPolygonId(e.features[0]);
+          //   setCenter(e.lngLat);
+        }
+      });
 
-      //   e.target.on('mousemove', 'fill-state', (e: mapboxgl.EventData) => {
-      //     console.log('mousemove');
-      //   });
-
-      //   e.target.on('mouseleave', 'fill-state', () => {
-      //     console.log('mouseleave');
-      //   });
+      mapRef?.current?.on('mouseleave', 'fill-state', () => {
+        setHighlightedPolygonId(null);
+      });
 
       e.target.on('click', 'fill-state', (e: mapboxgl.EventData) => {
         if (e.features.length > 0) {
@@ -141,6 +156,10 @@ const Map: React.FC<MapProps> = ({children}) => {
     // Clean up on unmount
     return () => map.remove();
   }, []);
+
+  useEffect(() => {
+    mapRef.current?.setLanguage(i18n.language);
+  }, [i18n.language]);
 
   const goToUserLocation = () => {
     getUserLocation(followLocation);

@@ -21,5 +21,14 @@ export const useMapStore = create<MapStoreType>()(set => ({
 
   setCenter: (center: mapboxgl.LngLatLike) => set({center}),
   setZoom: (zoom: number) => set({zoom}),
+
+  setHighlightedPolygonId: (
+    highlightedPolygonId: number | string | null | undefined
+  ) => set({highlightedPolygonId}),
+  setSelectedState: (selectedState: string | null | undefined) =>
+    set({selectedState}),
+  setSelectedDistrict: (selectedDistrict: string | null | undefined) =>
+    set({selectedDistrict}),
+
   clearMapStore: () => set(initialState),
 }));
